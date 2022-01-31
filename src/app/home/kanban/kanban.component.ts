@@ -19,6 +19,7 @@ import { Item, Workflows } from './models/workflows';
 export class KanbanComponent implements OnInit {
 
   workflows: Workflows[];// = JSON.parse(localStorage.getItem('data')) || [];
+  version: string;
 
   constructor(
     private snackbar: MatSnackBar,
@@ -31,6 +32,8 @@ export class KanbanComponent implements OnInit {
       this.workflows = workflows;
       this.saveDataToLocal();
     });
+
+    this.version = this.dataService.getVersion();
   }
 
   itemAdd(index: number): void {

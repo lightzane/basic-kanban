@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Workflows } from './models/workflows';
+import packageJson from './../../../../package.json';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,9 @@ export class DataService {
 
   getWorkflowsAsString(): string {
     return JSON.stringify(this.savedWorkflows);
+  }
+
+  getVersion(): string {
+    return packageJson.version;
   }
 }

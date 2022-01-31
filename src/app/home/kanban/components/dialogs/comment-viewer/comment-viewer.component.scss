@@ -3,6 +3,7 @@
     border-radius: 4px;
     overflow: hidden;
     // border-top: 3px solid var(--color-primary);
+    background-color: rgba(white, 0.95);
 
     .comment-content {
         // margin-top: 30px;
@@ -12,8 +13,9 @@
         display: inline-block;
         white-space: pre-wrap;
         word-wrap: break-word;
-        border: 2px solid var(--color-primary);
-        border-radius: 5px;
+        border: 1px solid rgba(#000, 0.3);
+        border-left: 3px solid var(--color-primary);
+        border-radius: 3px;
     }
 
     .comment-content + .span-action-group span:hover {

@@ -11,7 +11,7 @@
                 <span>Flag</span>
                 <div class="color-tile selected" [style.backgroundColor]="color"></div>
             </div>
-            <hr />
+            <mat-divider style="margin: 10px 0"></mat-divider>
             <div class="color-picker">
                 <div class="color-tile" *ngFor="let color of colors" [style.backgroundColor]="color" (click)="chooseColor(color)"></div>
             </div>

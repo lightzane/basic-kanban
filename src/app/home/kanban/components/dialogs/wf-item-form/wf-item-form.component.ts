@@ -18,7 +18,7 @@ export class WfItemFormComponent implements OnInit {
   placeholderText: string;
   displayColors: boolean = false;
   color: string = 'transparent';
-  colors = ['transparent', 'skyblue', '#2ecc71', '#e74c3c', 'yellow', 'orange', 'black', 'gray'];
+  colors = ['transparent', 'skyblue', '#2ecc71', 'pink', '#e74c3c', 'yellow', 'orange', 'black', 'gray'];
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: WfItemDialogData) { }
 
@@ -46,7 +46,7 @@ export class WfItemFormComponent implements OnInit {
         this.labelText = 'Workflow name';
         this.placeholderText = 'e.g. In Progress, Done';
         this.inputValue = this.data.input;
-        this.hintText = 'Todo';
+        this.hintText = 'Name or group your process';
         this.btnText = 'Update Workflow';
         this.btnColor = 'accent';
         break;

@@ -5,7 +5,7 @@
             {{ comment.timestamp | dateAgo }}
             <span *ngIf="comment.edited">&middot; (Edited)</span>
         </span>
-        <div #commentContent class="comment-content">{{ comment.content }}</div>
+        <div #commentContent class="comment-content mat-elevation-z1">{{ comment.content }}</div>
         <p class="mat-caption span-action-group">
             <span (click)="commentEditable(commentContent, c)">Edit</span>
             &middot;
