@@ -12,4 +12,5 @@ export interface Item {
 interface Comment {
     content: string,
     timestamp: number;
+    edited?: boolean;
 }

@@ -1,18 +1,17 @@
 <h2 mat-dialog-title>{{ item.name }}</h2>
 <mat-dialog-content>
-    <mat-card class="comment mat-elevation-z1" *ngFor="let comment of item.comments; let c = index">
-        <mat-card-subtitle>
-            <span [matTooltip]="comment.timestamp | date: 'mediumDate'"> &middot; {{ comment.timestamp | dateAgo }} &middot; </span>
-            <div class="spacer"></div>
-            <button mat-icon-button matTooltip="Remove comment" (click)="removeComment(c)">
-                <mat-icon>delete_outline</mat-icon>
-            </button>
-        </mat-card-subtitle>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-            <p class="comment-content">{{ comment.content }}</p>
-        </mat-card-content>
-    </mat-card>
+    <div class="mat-body-1 comment" *ngFor="let comment of item.comments; let c = index">
+        <span class="mat-caption" [matTooltip]="(comment.timestamp | date: 'mediumDate') + ' at ' + (comment.timestamp | date: 'mediumTime')" matTooltipPosition="right">
+            {{ comment.timestamp | dateAgo }}
+            <span *ngIf="comment.edited">&middot; (Edited)</span>
+        </span>
+        <div #commentContent class="comment-content">{{ comment.content }}</div>
+        <p class="mat-caption span-action-group">
+            <span (click)="commentEditable(commentContent, c)">Edit</span>
+            &middot;
+            <span (click)="commentDelete(c)">Delete</span>
+        </p>
+    </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close] cdkFocusInitial>Close</button>

@@ -10,7 +10,11 @@ export class DataService {
   private savedWorkflows = JSON.parse(localStorage.getItem('data')) || [];
   workflows$ = new BehaviorSubject<Workflows[]>(this.savedWorkflows);
 
-  constructor() { }
+  constructor() {
+    this.workflows$.subscribe((data) => {
+      this.savedWorkflows = data;
+    });
+  }
 
   getWorkflowsAsString(): string {
     return JSON.stringify(this.savedWorkflows);

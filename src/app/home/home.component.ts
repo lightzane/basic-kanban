@@ -83,12 +83,16 @@ export class HomeComponent implements OnInit {
   }
 
   openDialog(fileInput: HTMLInputElement): void {
-    const dialogRef = this.dialog.open(FileImportConfirmComponent);
-    dialogRef.afterClosed().subscribe((isConfirmed) => {
-      if (isConfirmed) {
-        fileInput.click();
-      }
-    });
+    if (this.dataService.getWorkflowsAsString() === '[]') {
+      fileInput.click();
+    } else {
+      const dialogRef = this.dialog.open(FileImportConfirmComponent);
+      dialogRef.afterClosed().subscribe((isConfirmed) => {
+        if (isConfirmed) {
+          fileInput.click();
+        }
+      });
+    }
   }
 
   private downloadData(filename: string, data: string): void {
