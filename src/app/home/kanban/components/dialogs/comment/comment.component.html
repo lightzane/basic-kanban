@@ -1,0 +1,15 @@
+<form onsubmit="return false">
+    <h2 mat-dialog-title>Add Comment</h2>
+    <mat-dialog-content>
+        <p>{{ todo }}</p>
+        <mat-form-field appearance="fill" [style.width.%]="100">
+            <mat-label>Comment</mat-label>
+            <textarea matInput #txt rows="10" placeholder="Enter your comment here"></textarea>
+            <mat-hint>Your comment</mat-hint>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]>Cancel</button>
+        <button type="submit" mat-raised-button [mat-dialog-close]="txt.value" color="primary">Add Comment</button>
+    </mat-dialog-actions>
+</form>

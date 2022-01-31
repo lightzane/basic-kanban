@@ -1,0 +1,25 @@
+.color-picker {
+    display: flex;
+}
+
+.color-tile {
+    width: 15px;
+    height: 15px;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.color-tile.selected {
+    display: inline-block;
+    cursor: default;
+    margin-left: 20px;
+}
+
+@media screen and (max-width: 400px) {
+    .mat-dialog-actions button {
+        width: 100%;
+        flex: 1;
+    }
+}

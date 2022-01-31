@@ -1,0 +1,24 @@
+<form onsubmit="return false">
+    <h2 mat-dialog-title>{{ title }}</h2>
+    <mat-dialog-content>
+        <mat-form-field appearance="outline" [style.width.%]="100">
+            <mat-label>{{ labelText }}</mat-label>
+            <input matInput #txt type="text" [value]="inputValue" [placeholder]="placeholderText" />
+            <mat-hint>{{ hintText }}</mat-hint>
+        </mat-form-field>
+        <div class="container" *ngIf="displayColors">
+            <div *ngIf="color" style="display: flex">
+                <span>Flag</span>
+                <div class="color-tile selected" [style.backgroundColor]="color"></div>
+            </div>
+            <hr />
+            <div class="color-picker">
+                <div class="color-tile" *ngFor="let color of colors" [style.backgroundColor]="color" (click)="chooseColor(color)"></div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button type="submit" mat-raised-button [color]="btnColor" [mat-dialog-close]="{ name: txt.value, color: this.color }">{{ btnText }}</button>
+    </mat-dialog-actions>
+</form>

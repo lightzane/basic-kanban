@@ -1,0 +1,42 @@
+<mat-sidenav-container class="home mat-app-background">
+    <!-- [ngClass]="{ 'dark-theme': isDark }" -->
+    <!-- Sidenav -->
+    <!-- <mat-sidenav #sidenav [opened]="(isHandset$ | async) === false" [mode]="(isHandset$ | async) ? 'over' : 'side'">
+        <mat-toolbar style="background: inherit">
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+        </mat-toolbar>
+        <mat-nav-list cdkAccordion>
+            <a mat-list-item cdkAccordionItem routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleSidenav(sidenav)">
+                <mat-icon>home</mat-icon>
+                <span>Home</span>
+            </a>
+            <a mat-list-item cdkAccordionItem routerLinkActive="active" (click)="toggleSidenav(sidenav)">
+                <mat-icon>image</mat-icon>
+                <span>Card</span>
+            </a>
+            <hr />
+            <a mat-list-item cdkAccordionItem routerLinkActive="active" (click)="toggleSidenav(sidenav)">
+                <mat-icon>face</mat-icon>
+                <span>Example</span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav> -->
+
+    <mat-sidenav-content>
+        <!-- Toolbar -->
+        <mat-toolbar class="home-toolbar mat-elevation-z2" color="primary">
+            <!-- <button mat-icon-button>
+                <mat-icon>menu</mat-icon>
+            </button> -->
+            <span>Kanban</span>
+            <div class="spacer"></div>
+            <button mat-icon-button (click)="toggleTheme()" disabled>
+                <mat-icon>{{ isDark ? "light_mode" : "dark_mode" }} </mat-icon>
+            </button>
+        </mat-toolbar>
+        <!-- Content -->
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

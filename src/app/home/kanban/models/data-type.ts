@@ -1,0 +1,1 @@
+export type DataType = 'wf-add' | 'wf-rename' | 'wf-delete' | 'item-add' | 'item-rename' | 'item-delete';

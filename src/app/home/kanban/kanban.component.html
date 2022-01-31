@@ -1,0 +1,84 @@
+<div class="kanban">
+    <div class="parent-card-container" cdkDropList cdkDropListGroup cdkDropListOrientation="horizontal" (cdkDropListDropped)="wfDrop($event)" @listAnim>
+        <!-- cdkDropListGroup is given since we don't have a "fixed" [cdkDropListConnectedTo] array value -->
+        <!-- Workflow -->
+        <div class="wf-wrapper" *ngFor="let wf of workflows; let i = index" cdkDrag @slideIn>
+            <mat-card class="wf-card mat-elevation-z2">
+                <mat-card-title>
+                    <span>{{ wf.name }}</span>
+                    <button mat-icon-button [mat-menu-trigger-for]="listOpts">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #listOpts>
+                        <button mat-menu-item (click)="wfRename(i)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Rename</span>
+                        </button>
+                        <button mat-menu-item (click)="wfDelete(i)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                        </button>
+                    </mat-menu>
+                </mat-card-title>
+                <!-- Items -->
+                <mat-card-content cdkDropList (cdkDropListDropped)="itemDrop($event, i)" [cdkDropListData]="wf.items">
+                    <mat-card class="item-card" *ngFor="let item of wf.items; let j = index" cdkDrag [style.borderLeftColor]="item.color">
+                        <mat-card-content>
+                            <span style="max-width: 50%">{{ item.name }}</span>
+                            <div class="spacer"></div>
+                            <button class="comment-icon-group" mat-button *ngIf="item.comments.length" (click)="itemCommentView(i, j)">
+                                <mat-icon>chat_bubble_outline</mat-icon>
+                                <span>{{ item.comments.length }}</span>
+                            </button>
+                            <button mat-icon-button [mat-menu-trigger-for]="listOpts">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #listOpts>
+                                <button mat-menu-item (click)="itemOpenCommentDialog(i, j)">
+                                    <mat-icon>chat_bubble</mat-icon>
+                                    <span>Add Comment</span>
+                                </button>
+                                <button mat-menu-item (click)="itemModify(i, j)">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Modify</span>
+                                </button>
+                                <button mat-menu-item (click)="itemDelete(i, j)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Delete</span>
+                                </button>
+                            </mat-menu>
+                        </mat-card-content>
+                        <!-- <mat-divider></mat-divider>
+                        <mat-card-actions>
+                            <button class="comment-icon-group" mat-button>
+                                <mat-icon>chat_bubble_outline</mat-icon>
+                                <span>{{ item.comments.length }}</span>
+                            </button>
+                        </mat-card-actions> -->
+                    </mat-card>
+                    <!-- Add Item -->
+                    <button mat-button color="primary" style="width: 100%; text-align: left" (click)="itemAdd(i)">
+                        <mat-icon>add</mat-icon>
+                        <span>Add an item</span>
+                    </button>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- Add Workflow -->
+        <div class="wf-add">
+            <button mat-button style="width: 100%; height: 100%" color="primary" (click)="wfAdd()">
+                <mat-icon>add</mat-icon>
+                <span>Add Workflow</span>
+            </button>
+        </div>
+    </div>
+    <div>
+        <p>
+            <strong>Notice</strong>: Data is currently being saved in the browser's local storage<br />
+            Do not go <code>incognito</code> if you do not want to lose your data when the browser is closed
+        </p>
+    </div>
+    <!-- DEBUG HELPER -->
+    <!-- <pre>{{ workflows | json }}</pre> -->
+</div>

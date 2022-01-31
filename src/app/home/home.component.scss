@@ -1,0 +1,77 @@
+.home {
+    height: 100%;
+    background-image: url("./../../assets/sun-tornado.svg");
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.home-toolbar {
+    top: 0;
+    position: sticky;
+    z-index: 2;
+}
+
+.mat-sidenav-container {
+    height: 100%;
+}
+
+.mat-sidenav {
+    width: 256px;
+}
+
+.mat-list-item {
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 5px auto;
+    width: 95% !important;
+
+    span {
+        margin: 0 20px;
+    }
+}
+
+.mat-list-item.active {
+    background-color: var(--color-accent) !important;
+    color: var(--color-accent-contrast) !important;
+}
+
+.m-50 {
+    margin-left: 50px !important;
+}
+
+.chevron {
+    position: absolute;
+    right: 20px;
+}
+
+.spacer {
+    flex: 1;
+}
+
+p {
+    white-space: pre-wrap; // in HTML, display "new lines (\n)" from textarea input
+}
+
+// @media screen and (max-width: 400px) {
+//     .mat-sidenav {
+//         width: 100%;
+//     }
+// }
+
+.container {
+    margin: 10px;
+    padding: 10px;
+
+    button {
+        margin: 5px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    p {
+        font-size: 16px !important;
+    }
+    .container {
+        margin: 0;
+    }
+}
