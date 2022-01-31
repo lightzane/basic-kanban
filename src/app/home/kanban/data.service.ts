@@ -11,4 +11,8 @@ export class DataService {
   workflows$ = new BehaviorSubject<Workflows[]>(this.savedWorkflows);
 
   constructor() { }
+
+  getWorkflowsAsString(): string {
+    return JSON.stringify(this.savedWorkflows);
+  }
 }

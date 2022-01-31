@@ -1,9 +1,12 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+// import { MatSidenav } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { FileImportConfirmComponent } from './components/dialogs/file-import-confirm/file-import-confirm.component';
+import { DataService } from './kanban/data.service';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +21,9 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private overlayContainer: OverlayContainer
+    private overlayContainer: OverlayContainer,
+    private dataService: DataService,
+    private dialog: MatDialog
   ) {
 
     this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -47,6 +52,62 @@ export class HomeComponent implements OnInit {
       this.overlayContainer.getContainerElement().classList.remove('dark-theme');
       localStorage.setItem('theme', 'light');
     }
+  }
+
+  dataExport(): void {
+    const data = this.dataService.getWorkflowsAsString();
+    this.downloadData('basic-kanban.txt', data);
+  }
+
+  onFileSelect(event: Event): void {
+
+    const { target } = event;
+    const { files } = target as HTMLInputElement;
+
+    const file: File = files[0];
+
+    const fileReader = new FileReader();
+    fileReader.readAsText(file, 'utf-8');
+
+    fileReader.onload = ((fileLoadedEvent) => {
+
+      const fileContent = fileLoadedEvent.target.result as string;
+
+      if (!file.name.match(/\.txt$/)) {
+        return;
+      }
+
+      this.dataService.workflows$.next(JSON.parse(fileContent));
+    });
+
+  }
+
+  openDialog(fileInput: HTMLInputElement): void {
+    const dialogRef = this.dialog.open(FileImportConfirmComponent);
+    dialogRef.afterClosed().subscribe((isConfirmed) => {
+      if (isConfirmed) {
+        fileInput.click();
+      }
+    });
+  }
+
+  private downloadData(filename: string, data: string): void {
+    // Create element <a> tag
+    const download = document.createElement('a');
+    download.style.display = 'none';
+    // Set filename when downloading
+    download.setAttribute('download', filename);
+    // Set content
+    download.setAttribute(
+      'href',
+      'data:text/plain;charset=utf-8,' + encodeURIComponent(data)
+    );
+    // Append the element to the body
+    document.body.appendChild(download);
+    // Simulate click
+    download.click();
+    // Remove the element
+    document.body.removeChild(download);
   }
 
   // toggleSidenav(sidenav: MatSidenav): void {

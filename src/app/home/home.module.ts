@@ -9,10 +9,14 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { CdkAccordionModule } from "@angular/cdk/accordion";
+import { MatMenuModule } from '@angular/material/menu';
+import { FileImportConfirmComponent } from './components/dialogs/file-import-confirm/file-import-confirm.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    FileImportConfirmComponent
   ],
   imports: [
     CommonModule,
@@ -23,6 +27,8 @@ import { CdkAccordionModule } from "@angular/cdk/accordion";
     MatIconModule,
     MatButtonModule,
     CdkAccordionModule,
+    MatMenuModule,
+    MatDialogModule
   ]
 })
 export class HomeModule { }
