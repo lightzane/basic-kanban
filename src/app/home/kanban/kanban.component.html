@@ -3,9 +3,12 @@
         <!-- cdkDropListGroup is given since we don't have a "fixed" [cdkDropListConnectedTo] array value -->
         <!-- Workflow -->
         <div class="wf-wrapper" *ngFor="let wf of workflows; let i = index" cdkDrag @slideIn>
-            <mat-card class="wf-card mat-elevation-z2">
+            <mat-card class="wf-card mat-elevation-z3">
                 <mat-card-title>
-                    <span>{{ wf.name }}</span>
+                    <span class="wf-title-drag mat-title" cdkDragHandle>
+                        <mat-icon color="primary">drag_indicator</mat-icon>
+                        <span>{{ wf.name }}</span>
+                    </span>
                     <button mat-icon-button [mat-menu-trigger-for]="listOpts">
                         <mat-icon>more_vert</mat-icon>
                     </button>
@@ -73,7 +76,7 @@
             </button>
         </div>
     </div>
-    <div style="margin-top: 20px">
+    <div style="margin: 5px; padding: 15px">
         <p><strong>Notice</strong>: Data is currently being saved in the browser's local storage<br />Do not go <code>incognito</code> if you do not want to lose your data when the browser is closed</p>
 
         <mat-card class="storage-card" style="width: 200px">
@@ -86,7 +89,7 @@
             </mat-card-content>
         </mat-card>
 
-        <span class="mat-caption">Version: {{ version }}</span>
+        <span class="mat-caption" style="margin-bottom: 20px">Version: {{ version }}</span>
     </div>
     <!-- DEBUG HELPER -->
     <!-- <pre>{{ workflows | json }}</pre> -->

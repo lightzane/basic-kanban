@@ -12,7 +12,6 @@
 }
 
 .mat-card-title {
-    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -62,6 +61,22 @@
         display: flex;
         justify-content: space-between;
     }
+}
+
+.wf-title-drag {
+    align-items: center;
+    display: inline-flex;
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+/* (Optional) Apply a "closed-hand" cursor during drag operation. */
+.wf-title-drag:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
 }
 
 // CDK ===================================================
