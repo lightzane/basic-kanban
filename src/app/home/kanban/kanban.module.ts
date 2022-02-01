@@ -14,9 +14,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { CommentComponent } from './components/dialogs/comment/comment.component';
 import { CommentViewerComponent } from './components/dialogs/comment-viewer/comment-viewer.component';
 import { DateAgoPipe } from '../../shared/pipes/date-ago.pipe';
+import { ShortenBytes } from '../../shared/pipes/shorten-bytes.pipe';
 
 const routes: Routes = [
   {
@@ -31,7 +33,8 @@ const routes: Routes = [
     WfItemFormComponent,
     CommentComponent,
     CommentViewerComponent,
-    DateAgoPipe
+    DateAgoPipe,
+    ShortenBytes
   ],
   imports: [
     CommonModule,
@@ -46,7 +49,8 @@ const routes: Routes = [
     MatInputModule,
     MatFormFieldModule,
     MatDividerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressBarModule
   ]
 })
 export class KanbanModule { }

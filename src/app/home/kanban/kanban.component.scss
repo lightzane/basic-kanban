@@ -55,6 +55,15 @@
     }
 }
 
+.storage-card {
+    margin: 20px 0;
+
+    .span-group {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
 // CDK ===================================================
 .cdk-drag-preview:not(.wf-wrapper) {
     box-sizing: border-box;

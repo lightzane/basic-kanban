@@ -20,6 +20,9 @@ export class KanbanComponent implements OnInit {
 
   workflows: Workflows[];// = JSON.parse(localStorage.getItem('data')) || [];
   version: string;
+  storageSize: number; // bytes
+  maxStorageSize: number; // bytes
+  totalStoragePercent: number;
 
   constructor(
     private snackbar: MatSnackBar,
@@ -28,12 +31,17 @@ export class KanbanComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.version = this.dataService.getVersion();
+    this.maxStorageSize = this.dataService.getBrowserMaxStorage() * 1024; // convert to bytes;
+
     this.dataService.workflows$.subscribe((workflows) => {
       this.workflows = workflows;
       this.saveDataToLocal();
+      this.storageSize = this.dataService.getTotalSize();
+      this.totalStoragePercent = (((this.storageSize) / this.maxStorageSize) * 100);
+      console.log(this.totalStoragePercent);
     });
-
-    this.version = this.dataService.getVersion();
   }
 
   itemAdd(index: number): void {

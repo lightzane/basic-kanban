@@ -26,7 +26,7 @@
                         <mat-card-content>
                             <span style="max-width: 50%">{{ item.name }}</span>
                             <div class="spacer"></div>
-                            <button class="comment-icon-group" mat-button *ngIf="item.comments.length" (click)="itemCommentView(i, j)">
+                            <button class="comment-icon-group" mat-button *ngIf="item.comments.length" (click)="itemCommentView(i, j)" matTooltip="View comments" matTooltipPosition="above">
                                 <mat-icon>chat_bubble_outline</mat-icon>
                                 <span>{{ item.comments.length }}</span>
                             </button>
@@ -73,8 +73,19 @@
             </button>
         </div>
     </div>
-    <div>
+    <div style="margin-top: 20px">
         <p><strong>Notice</strong>: Data is currently being saved in the browser's local storage<br />Do not go <code>incognito</code> if you do not want to lose your data when the browser is closed</p>
+
+        <mat-card class="storage-card" style="width: 200px">
+            <mat-card-content>
+                <mat-progress-bar mode="determinate" [value]="totalStoragePercent"></mat-progress-bar>
+                <div class="span-group">
+                    <span class="mat-caption">{{ storageSize | shortenBytes }}</span>
+                    <span class="mat-caption">{{ maxStorageSize | shortenBytes }}</span>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
         <span class="mat-caption">Version: {{ version }}</span>
     </div>
     <!-- DEBUG HELPER -->
