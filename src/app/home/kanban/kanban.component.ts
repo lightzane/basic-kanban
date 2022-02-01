@@ -40,7 +40,6 @@ export class KanbanComponent implements OnInit {
       this.saveDataToLocal();
       this.storageSize = this.dataService.getTotalSize();
       this.totalStoragePercent = (((this.storageSize) / this.maxStorageSize) * 100);
-      console.log(this.totalStoragePercent);
     });
   }
 
@@ -52,6 +51,7 @@ export class KanbanComponent implements OnInit {
       if (userInput) {
         this.workflows[index].items.push({
           name: userInput.name,
+          description: userInput.description,
           comments: [],
           color: userInput.color
         });
@@ -93,9 +93,31 @@ export class KanbanComponent implements OnInit {
     this.dataService.workflows$.next(this.workflows);
   }
 
+  itemModify(wfIndex: number, index: number): void {
+
+    const data: WfItemDialogData = {
+      type: 'item-rename',
+      input: {
+        name: this.workflows[wfIndex].items[index].name,
+        description: this.workflows[wfIndex].items[index].description || null,
+        color: this.workflows[wfIndex].items[index].color
+      }
+    };
+    const dialogRef = this.dialog.open(WfItemFormComponent, { data });
+    dialogRef.afterClosed().subscribe((userInput) => {
+      if (userInput) {
+        this.workflows[wfIndex].items[index].name = userInput.name;
+        this.workflows[wfIndex].items[index].description = userInput.description;
+        this.workflows[wfIndex].items[index].color = userInput.color;
+        this.dataService.workflows$.next(this.workflows);
+        this.snackbar.open('Update successfully');
+      }
+    });
+  }
+
   itemOpenCommentDialog(wfIndex: number, index: number): void {
-    const todo = this.workflows[wfIndex].items[index].name;
-    const dialogRef = this.dialog.open(CommentComponent, { data: todo });
+    const item = this.workflows[wfIndex].items[index];
+    const dialogRef = this.dialog.open(CommentComponent, { data: item });
 
     dialogRef.afterClosed().subscribe((userInput) => {
       if (userInput) {
@@ -104,25 +126,6 @@ export class KanbanComponent implements OnInit {
           timestamp: +new Date()
         });
         this.snackbar.open('Added comment');
-        this.dataService.workflows$.next(this.workflows);
-      }
-    });
-  }
-
-  itemModify(wfIndex: number, index: number): void {
-    const currentTodo = this.workflows[wfIndex].items[index].name;
-    const data: WfItemDialogData = {
-      type: 'item-rename',
-      input: {
-        name: currentTodo,
-        color: this.workflows[wfIndex].items[index].color
-      }
-    };
-    const dialogRef = this.dialog.open(WfItemFormComponent, { data });
-    dialogRef.afterClosed().subscribe((userInput) => {
-      if (userInput) {
-        this.workflows[wfIndex].items[index].name = userInput.name;
-        this.workflows[wfIndex].items[index].color = userInput.color;
         this.dataService.workflows$.next(this.workflows);
       }
     });

@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+// import { OverlayContainer } from '@angular/cdk/overlay';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 // import { MatSidenav } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private overlayContainer: OverlayContainer,
+    // private overlayContainer: OverlayContainer,
     private dataService: DataService,
     private dialog: MatDialog
   ) {
@@ -32,27 +32,27 @@ export class HomeComponent implements OnInit {
         shareReplay(1) // share only the last boolean value
       );
 
-    const theme = localStorage.getItem('theme');
-    this.isDark = theme === 'dark' ? true : false;
+    // const theme = localStorage.getItem('theme');
+    // this.isDark = theme === 'dark' ? true : false;
   }
 
   ngOnInit(): void {
-    this.applyDarkDialog();
+    // this.applyDarkDialog();
   }
 
   /**
    * Apply dark theme to mat-dialog components
    * And also save `dark` to localStorage
    */
-  applyDarkDialog(): void {
-    if (this.isDark) {
-      this.overlayContainer.getContainerElement().classList.add('dark-theme');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      this.overlayContainer.getContainerElement().classList.remove('dark-theme');
-      localStorage.setItem('theme', 'light');
-    }
-  }
+  // applyDarkDialog(): void {
+  //   if (this.isDark) {
+  //     this.overlayContainer.getContainerElement().classList.add('dark-theme');
+  //     localStorage.setItem('theme', 'dark');
+  //   } else {
+  //     this.overlayContainer.getContainerElement().classList.remove('dark-theme');
+  //     localStorage.setItem('theme', 'light');
+  //   }
+  // }
 
   dataExport(): void {
     const data = this.dataService.getWorkflowsAsString();
@@ -120,9 +120,9 @@ export class HomeComponent implements OnInit {
   //   });
   // }
 
-  toggleTheme(): void {
-    this.isDark = !this.isDark;
-    this.applyDarkDialog();
-  }
+  // toggleTheme(): void {
+  //   this.isDark = !this.isDark;
+  //   this.applyDarkDialog();
+  // }
 
 }

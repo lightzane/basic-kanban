@@ -16,9 +16,10 @@ export class WfItemFormComponent implements OnInit {
   hintText: string;
   labelText: string;
   placeholderText: string;
+  description: string;
   displayColors: boolean = false;
   color: string = 'transparent';
-  colors = ['transparent', 'skyblue', '#2ecc71', 'pink', '#e74c3c', 'yellow', 'orange', 'black', 'gray'];
+  colors = ['transparent', 'skyblue', '#2ecc71', 'pink', '#e74c3c', '#f1c40f', '#9b59b6', 'black', 'gray'];
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: WfItemDialogData) { }
 
@@ -58,6 +59,7 @@ export class WfItemFormComponent implements OnInit {
         this.placeholderText = 'e.g. Watch netflix';
         this.inputValue = '';
         this.hintText = 'Todo';
+        this.description = '';
         this.btnText = 'Add Todo';
         this.btnColor = 'primary';
         break;
@@ -69,6 +71,7 @@ export class WfItemFormComponent implements OnInit {
         this.placeholderText = 'e.g. Watch netflix';
         this.inputValue = this.data.input.name;
         this.hintText = 'Todo';
+        this.description = this.data.input.description;
         this.btnText = 'Update Todo';
         this.btnColor = 'accent';
         this.color = this.data.input.color;
@@ -80,6 +83,11 @@ export class WfItemFormComponent implements OnInit {
 
   chooseColor(name: string): void {
     this.color = name;
+  }
+
+  isTodo(): boolean {
+    if (this.hintText.match(/todo/i)) return true;
+    else return false;
   }
 
 }

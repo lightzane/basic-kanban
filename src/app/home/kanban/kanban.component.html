@@ -27,7 +27,7 @@
                 <mat-card-content cdkDropList (cdkDropListDropped)="itemDrop($event, i)" [cdkDropListData]="wf.items">
                     <mat-card class="item-card" *ngFor="let item of wf.items; let j = index" cdkDrag [style.borderLeftColor]="item.color">
                         <mat-card-content>
-                            <span style="max-width: 50%">{{ item.name }}</span>
+                            <span style="max-width: 50%" [matTooltip]="item.description">{{ item.name }}</span>
                             <div class="spacer"></div>
                             <button class="comment-icon-group" mat-button *ngIf="item.comments.length" (click)="itemCommentView(i, j)" matTooltip="View comments" matTooltipPosition="above">
                                 <mat-icon>chat_bubble_outline</mat-icon>
