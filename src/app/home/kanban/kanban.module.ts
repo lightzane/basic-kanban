@@ -22,7 +22,7 @@ import { CommentViewerComponent } from './components/dialogs/comment-viewer/comm
 import { DateAgoPipe } from '../../shared/pipes/date-ago.pipe';
 import { ShortenBytes } from '../../shared/pipes/shorten-bytes.pipe';
 import { FormsModule } from '@angular/forms';
-import { CategoryComponent } from './components/category/category.component';
+import { CategoryComponent } from './components/dialogs/category/category.component';
 
 const routes: Routes = [
   {

@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe((isConfirmed) => {
       if (isConfirmed) {
         this.dataService.globalData$.next({ categories: initialCategory, workflows: [] });
-        this.snackbar.open('All data cleared successfully');
+        this.snackbar.open('All data cleared successfully', 'OK');
       }
     });
   }

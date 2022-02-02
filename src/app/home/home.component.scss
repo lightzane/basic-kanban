@@ -80,4 +80,8 @@ p {
     .container {
         margin: 0;
     }
+    .dialog-mt-sm-15vh {
+        // to prevent mat-dialog-actions buttons from disappearing in view in small device
+        margin-top: -15vh;
+    }
 }

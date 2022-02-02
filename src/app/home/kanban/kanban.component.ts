@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { listAnim, slideIn } from '../../my-animations';
-import { CategoryComponent } from './components/category/category.component';
+import { CategoryComponent } from './components/dialogs/category/category.component';
 import { CommentViewerComponent } from './components/dialogs/comment-viewer/comment-viewer.component';
 import { CommentComponent } from './components/dialogs/comment/comment.component';
 import { WfItemFormComponent } from './components/dialogs/wf-item-form/wf-item-form.component';
@@ -11,7 +11,7 @@ import { DataService } from './data.service';
 import { Category } from './models/category';
 import { GlobalData } from './models/global-data';
 import { WfItemDialogData } from './models/wf-item-dialog-data';
-import { Item, Workflows } from './models/workflows';
+import { Item } from './models/workflows';
 
 @Component({
   selector: 'app-kanban',
@@ -94,13 +94,14 @@ export class KanbanComponent implements OnInit {
         this.dataService.globalData$.next(this.globalData);
 
         const cat = this.categories.find(v => v.color === userInput.color).name;
-        this.snackbar.open(`Item added with ${cat} category`);
+        this.snackbar.open(`Item added with ${cat} category`, 'OK');
       }
     });
   }
 
   itemCommentView(wfIndex: number, index: number): void {
     this.dialog.open(CommentViewerComponent, {
+      panelClass: ['dialog-mt-sm-15vh'],
       data: {
         wfIndex,
         index
@@ -110,7 +111,7 @@ export class KanbanComponent implements OnInit {
 
   itemDelete(wfIndex: number, index: number): void {
     this.globalData.workflows[wfIndex].items.splice(index, 1);
-    this.snackbar.open(`Deleted successfully`);
+    this.snackbar.open(`Deleted successfully`, 'OK');
     // this.dataService.workflows$.next(this.workflows);
     this.dataService.globalData$.next(this.globalData);
   }
@@ -151,7 +152,7 @@ export class KanbanComponent implements OnInit {
         this.globalData.workflows[wfIndex].items[index].color = userInput.color;
         // this.dataService.workflows$.next(this.workflows);
         this.dataService.globalData$.next(this.globalData);
-        this.snackbar.open('Update successfully');
+        this.snackbar.open('Update successfully', 'OK');
       }
     });
   }
@@ -166,7 +167,7 @@ export class KanbanComponent implements OnInit {
           content: userInput,
           timestamp: +new Date()
         });
-        this.snackbar.open('Added comment');
+        this.snackbar.open('Added comment', 'OK');
         // this.dataService.workflows$.next(this.workflows);
         this.dataService.globalData$.next(this.globalData);
       }
@@ -176,12 +177,15 @@ export class KanbanComponent implements OnInit {
   openCategory(): void {
     // to make a copy prevent 2-way-binding on original value (Use JSON.parse(JSON.stringify()))
     const currentCategory = JSON.parse(JSON.stringify(this.categories));
-    const dialogRef = this.dialog.open(CategoryComponent, { data: currentCategory });
+    const dialogRef = this.dialog.open(CategoryComponent, {
+      panelClass: ['dialog-mt-sm-15vh'],
+      data: currentCategory
+    });
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
         this.globalData.categories = data;
         this.dataService.globalData$.next(this.globalData);
-        this.snackbar.open('Categories updated successfully');
+        this.snackbar.open('Categories updated successfully', 'OK');
       } else {
         this.categories = [...currentCategory];
       }

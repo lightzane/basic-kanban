@@ -87,6 +87,14 @@
     max-width: 430px;
 }
 
+.manage-categories {
+    cursor: pointer;
+}
+
+.manage-categories:hover {
+    color: var(--color-primary);
+}
+
 // CDK ===================================================
 .cdk-drag-preview:not(.wf-wrapper) {
     box-sizing: border-box;

@@ -1,22 +1,32 @@
 <div class="kanban">
-    <div class="container my-0">
-        <mat-form-field appearance="fill">
-            <mat-label>Categories</mat-label>
-            <mat-select [(ngModel)]="selectedColors" multiple>
-                <mat-option class="position-sticky top-0" (click)="selectAllCategory()" value="0" style="z-index: 2; background-color: #fff">ALL</mat-option>
-                <mat-divider></mat-divider>
-                <mat-option (click)="selectNotAll()" *ngFor="let category of categories" [value]="category.color" [style.borderLeftColor]="category.color" class="m-0 d-flex justify-content-center align-items-center" style="border-left: 10px solid transparent">
-                    <!-- <span class="d-inline-block me-3" style="width: 15px; height: 15px; border-radius: 3px; border: 1px solid #ccc" [style.backgroundColor]="c"></span> -->
-                    <span>{{ category.name }}</span>
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+    <div class="container my-0 pt-0">
+        <mat-card class="d-inline-block p-2 mt-0 mb-1">
+            <mat-card-content>
+                <mat-form-field appearance="fill">
+                    <mat-label>Categories</mat-label>
+                    <mat-select [(ngModel)]="selectedColors" multiple>
+                        <mat-option class="position-sticky top-0" (click)="selectAllCategory()" value="0" style="z-index: 2; background-color: #fff">ALL</mat-option>
+                        <mat-divider></mat-divider>
+                        <mat-option (click)="selectNotAll()" *ngFor="let category of categories" [value]="category.color" [style.borderLeftColor]="category.color" class="m-0 d-flex justify-content-center align-items-center" style="border-left: 10px solid transparent">
+                            <!-- <span class="d-inline-block me-3" style="width: 15px; height: 15px; border-radius: 3px; border: 1px solid #ccc" [style.backgroundColor]="c"></span> -->
+                            <span>{{ category.name }}</span>
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint align="end">
+                        <span class="manage-categories d-flex justify-content-center" (click)="openCategory()">
+                            <mat-icon>settings</mat-icon>
+                            <span class="ms-1">MANAGE CATEGORIES</span>
+                        </span>
+                    </mat-hint>
+                </mat-form-field>
+            </mat-card-content>
+        </mat-card>
 
-        <button mat-icon-button class="ms-1" matTooltip="Manage Categories" (click)="openCategory()">
+        <!-- <button mat-icon-button class="ms-1" matTooltip="Manage Categories" (click)="openCategory()">
             <mat-icon>more_vert</mat-icon>
-        </button>
+        </button> -->
 
-        <mat-checkbox (click)="selectAllCategory(false)" [(ngModel)]="allSelected">All categories selected</mat-checkbox>
+        <mat-checkbox class="ms-3" (click)="selectAllCategory(false)" [(ngModel)]="allSelected">All categories selected</mat-checkbox>
     </div>
 
     <!-- ALERT NOT ABLE TO DRAG WHEN SORT -->
@@ -137,7 +147,8 @@
         <mat-card-subtitle>This app says that...</mat-card-subtitle>
         <mat-card-content>
             <p style="font-size: 16px">This page uses browser's localStorage to store the data. Please use the same browser to retrieve the same data.</p>
-            <p class="mat-body-1" style="font-size: 16px; color: red">In Private browsing or in Incognito mode, you will lose all your data upon closing the browser.</p>
+            <p style="font-size: 16px">There are no other third-party database or server.</p>
+            <p class="mat-body-1" style="font-size: 16px; color: red">In Private browsing or Incognito mode, you will lose all your data upon closing the browser.</p>
         </mat-card-content>
         <mat-card-actions align="end">
             <a href="https://www.google.com/search?q=what+is+my+browser+max+local+storage&rlz=1C1GCEB_enPH906PH906&ei=zQT6YYWHN5OJoAS4_LqICg&ved=0ahUKEwjFobvek-D1AhWTBIgKHTi-DqEQ4dUDCA4&uact=5&oq=what+is+my+browser+max+local+storage&gs_lcp=Cgdnd3Mtd2l6EAM6BwgAEEcQsAM6CggAEEcQsAMQyQM6BwgAELADEEM6BAgAEA06BAghEApKBAhBGABKBAhGGABQ1iFY7DVgvzZoA3ACeACAAVSIAY0EkgEBN5gBAKABAcgBCcABAQ&sclient=gws-wiz" target="_blank" mat-button> MORE DETAILS</a>

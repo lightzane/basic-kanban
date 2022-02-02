@@ -1,15 +1,13 @@
 .comment {
-    margin: 30px 0;
     border-radius: 4px;
     overflow: hidden;
     // border-top: 3px solid var(--color-primary);
     background-color: rgba(white, 0.95);
 
     .comment-content {
-        // margin-top: 30px;
         padding: 10px;
         margin: 5px 0;
-        width: 90%;
+        width: 100%;
         display: inline-block;
         white-space: pre-wrap;
         word-wrap: break-word;
@@ -39,4 +37,8 @@
     .comment-content {
         font-size: 16px !important;
     }
+}
+
+.mat-dialog-content {
+    background-color: rgba(#fff, 0.8);
 }
