@@ -12,6 +12,8 @@ import { CdkAccordionModule } from "@angular/cdk/accordion";
 import { MatMenuModule } from '@angular/material/menu';
 import { FileImportConfirmComponent } from './components/dialogs/file-import-confirm/file-import-confirm.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatButtonModule,
     CdkAccordionModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDividerModule,
+    MatSnackBarModule
   ]
 })
 export class HomeModule { }

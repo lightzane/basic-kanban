@@ -2,6 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 // import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 // import { MatSidenav } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -18,12 +19,14 @@ export class HomeComponent implements OnInit {
 
   isDark: boolean;
   isHandset$: Observable<boolean>;
+  hasData: boolean = false;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     // private overlayContainer: OverlayContainer,
     private dataService: DataService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar
   ) {
 
     this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -38,6 +41,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // this.applyDarkDialog();
+    this.dataService.workflows$.subscribe((data) => {
+      if (data.length) this.hasData = true;
+      else this.hasData = false;
+    });
   }
 
   /**
@@ -53,6 +60,18 @@ export class HomeComponent implements OnInit {
   //     localStorage.setItem('theme', 'light');
   //   }
   // }
+
+  dataDelete(): void {
+    if (this.dataService.getWorkflowsAsString() !== '[]') {
+      const dialogRef = this.dialog.open(FileImportConfirmComponent);
+      dialogRef.afterClosed().subscribe((isConfirmed) => {
+        if (isConfirmed) {
+          this.dataService.workflows$.next([]);
+          this.snackbar.open('All data cleared successfully');
+        }
+      });
+    }
+  }
 
   dataExport(): void {
     const data = this.dataService.getWorkflowsAsString();

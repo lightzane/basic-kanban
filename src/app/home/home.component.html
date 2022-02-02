@@ -39,13 +39,18 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu>
+                <button mat-menu-item (click)="dataExport()" *ngIf="hasData">
+                    <mat-icon>file_download</mat-icon>
+                    <span>Export Data</span>
+                </button>
                 <button mat-menu-item (click)="openDialog(fileInput)">
                     <mat-icon>file_upload</mat-icon>
                     <span>Import Data</span>
                 </button>
-                <button mat-menu-item (click)="dataExport()">
-                    <mat-icon>file_download</mat-icon>
-                    <span>Export Data</span>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="dataDelete()" *ngIf="hasData">
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span style="color: red">Clear All Data</span>
                 </button>
             </mat-menu>
         </mat-toolbar>
