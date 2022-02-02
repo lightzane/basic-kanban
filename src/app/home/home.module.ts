@@ -10,7 +10,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { CdkAccordionModule } from "@angular/cdk/accordion";
 import { MatMenuModule } from '@angular/material/menu';
-import { FileImportConfirmComponent } from './components/dialogs/file-import-confirm/file-import-confirm.component';
+import { FileImportConfirmDialogComponent } from './components/dialogs/file-import-confirm/file-import-confirm.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -18,7 +18,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     HomeComponent,
-    FileImportConfirmComponent
+    FileImportConfirmDialogComponent
   ],
   imports: [
     CommonModule,

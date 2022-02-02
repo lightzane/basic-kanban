@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './file-import-confirm.component.html',
   styleUrls: ['./file-import-confirm.component.scss']
 })
-export class FileImportConfirmComponent implements OnInit {
+export class FileImportConfirmDialogComponent implements OnInit {
 
   constructor() { }
 

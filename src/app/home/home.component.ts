@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 // import { MatSidenav } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { FileImportConfirmComponent } from './components/dialogs/file-import-confirm/file-import-confirm.component';
+import { FileImportConfirmDialogComponent } from './components/dialogs/file-import-confirm/file-import-confirm.component';
 import { DataService } from './kanban/data.service';
 
 @Component({
@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
 
   dataDelete(): void {
     if (this.dataService.getWorkflowsAsString() !== '[]') {
-      const dialogRef = this.dialog.open(FileImportConfirmComponent);
+      const dialogRef = this.dialog.open(FileImportConfirmDialogComponent);
       dialogRef.afterClosed().subscribe((isConfirmed) => {
         if (isConfirmed) {
           this.dataService.workflows$.next([]);
@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit {
     if (this.dataService.getWorkflowsAsString() === '[]') {
       fileInput.click();
     } else {
-      const dialogRef = this.dialog.open(FileImportConfirmComponent);
+      const dialogRef = this.dialog.open(FileImportConfirmDialogComponent);
       dialogRef.afterClosed().subscribe((isConfirmed) => {
         if (isConfirmed) {
           fileInput.click();

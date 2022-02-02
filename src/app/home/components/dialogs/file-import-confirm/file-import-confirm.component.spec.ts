@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FileImportConfirmComponent } from './file-import-confirm.component';
+import { FileImportConfirmDialogComponent } from './file-import-confirm.component';
 
-describe('FileImportConfirmComponent', () => {
-  let component: FileImportConfirmComponent;
-  let fixture: ComponentFixture<FileImportConfirmComponent>;
+describe('FileImportConfirmDialogComponent', () => {
+  let component: FileImportConfirmDialogComponent;
+  let fixture: ComponentFixture<FileImportConfirmDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FileImportConfirmComponent ]
+      declarations: [ FileImportConfirmDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FileImportConfirmComponent);
+    fixture = TestBed.createComponent(FileImportConfirmDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

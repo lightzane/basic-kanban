@@ -79,6 +79,14 @@
     cursor: -webkit-grabbing;
 }
 
+.info-consent {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    margin: 24px;
+    max-width: 430px;
+}
+
 // CDK ===================================================
 .cdk-drag-preview:not(.wf-wrapper) {
     box-sizing: border-box;

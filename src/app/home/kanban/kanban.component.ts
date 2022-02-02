@@ -24,6 +24,13 @@ export class KanbanComponent implements OnInit {
   maxStorageSize: number; // bytes
   totalStoragePercent: number;
 
+  /** 
+   * Display consent info to user
+   * 
+   * (the one displayed in the lower bottom of the screen) 
+   */
+  docsCookies: boolean = false;
+
   constructor(
     private snackbar: MatSnackBar,
     private dialog: MatDialog,
@@ -41,6 +48,10 @@ export class KanbanComponent implements OnInit {
       this.storageSize = this.dataService.getTotalSize();
       this.totalStoragePercent = (((this.storageSize) / this.maxStorageSize) * 100);
     });
+
+    if (localStorage.getItem('docs-cookies') === 'true') {
+      this.docsCookies = true;
+    }
   }
 
   itemAdd(index: number): void {
@@ -134,6 +145,11 @@ export class KanbanComponent implements OnInit {
   saveDataToLocal(): void {
     const data = JSON.stringify(this.workflows);
     localStorage.setItem('data', data);
+  }
+
+  userGotIt(): void {
+    localStorage.setItem('docs-cookies', 'true');
+    this.docsCookies = true;
   }
 
   wfAdd(): void {

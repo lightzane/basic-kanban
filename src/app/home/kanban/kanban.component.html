@@ -91,6 +91,15 @@
 
         <span class="mat-caption" style="margin-bottom: 20px">Version: {{ version }}</span>
     </div>
+    <mat-card class="info-consent mat-elevation-z7" *ngIf="!docsCookies">
+        <mat-card-content>
+            <p style="font-size: 16px">This page uses browser's localStorage to store the data. Each origin can store a total of {{ maxStorageSize | shortenBytes }}</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <a href="https://www.google.com/search?q=what+is+my+browser+max+local+storage&rlz=1C1GCEB_enPH906PH906&ei=zQT6YYWHN5OJoAS4_LqICg&ved=0ahUKEwjFobvek-D1AhWTBIgKHTi-DqEQ4dUDCA4&uact=5&oq=what+is+my+browser+max+local+storage&gs_lcp=Cgdnd3Mtd2l6EAM6BwgAEEcQsAM6CggAEEcQsAMQyQM6BwgAELADEEM6BAgAEA06BAghEApKBAhBGABKBAhGGABQ1iFY7DVgvzZoA3ACeACAAVSIAY0EkgEBN5gBAKABAcgBCcABAQ&sclient=gws-wiz" target="_blank" mat-button> MORE DETAILS</a>
+            <button mat-button color="primary" (click)="userGotIt()">OK, GOT IT</button>
+        </mat-card-actions>
+    </mat-card>
     <!-- DEBUG HELPER -->
     <!-- <pre>{{ workflows | json }}</pre> -->
 </div>
