@@ -2,7 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from '../../../data.service';
-import { Item, Workflows } from '../../../models/workflows';
+import { Category } from '../../../models/category';
+import { GlobalData } from '../../../models/global-data';
+import { Item } from '../../../models/workflows';
 
 @Component({
   selector: 'app-comment-viewer',
@@ -11,13 +13,15 @@ import { Item, Workflows } from '../../../models/workflows';
 })
 export class CommentViewerComponent implements OnInit {
 
-  wf: Workflows[];
+  globalData: GlobalData;
   item: Item;
 
   wfIndex: number;
   index: number;
 
   editMode = false;
+
+  category: Category;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: { wfIndex: number, index: number; },
@@ -29,15 +33,16 @@ export class CommentViewerComponent implements OnInit {
     this.wfIndex = this.data.wfIndex;
     this.index = this.data.index;
 
-    this.dataService.workflows$.subscribe((workflows) => {
-      this.wf = workflows;
-      this.item = this.wf[this.wfIndex].items[this.index];
+    this.dataService.globalData$.subscribe((gd) => {
+      this.globalData = gd;
+      this.item = this.globalData.workflows[this.wfIndex].items[this.index];
+      this.category = this.dataService.getCategories().find(v => v.color === this.item.color);
     });
   }
 
   commentDelete(commentIndex: number): void {
-    this.wf[this.wfIndex].items[this.index].comments.splice(commentIndex, 1);
-    this.dataService.workflows$.next(this.wf);
+    this.globalData.workflows[this.wfIndex].items[this.index].comments.splice(commentIndex, 1);
+    this.dataService.globalData$.next(this.globalData);
   }
 
   commentEditable(commentContent: HTMLParagraphElement, commentIndex: number): void {
@@ -47,14 +52,14 @@ export class CommentViewerComponent implements OnInit {
     commentContent.focus();
     commentContent.onblur = () => {
       commentContent.contentEditable = 'false';
-      if (this.wf[this.wfIndex].items[this.index].comments[commentIndex].content == commentContent.innerText) {
+      if (this.globalData.workflows[this.wfIndex].items[this.index].comments[commentIndex].content == commentContent.innerText) {
         this.editMode = false;
         return;
       };
-      this.wf[this.wfIndex].items[this.index].comments[commentIndex].content = commentContent.innerText;
-      this.wf[this.wfIndex].items[this.index].comments[commentIndex].edited = true;
-      commentContent.innerText = this.wf[this.wfIndex].items[this.index].comments[commentIndex].content; // to prevent weird duplication of last line
-      this.dataService.workflows$.next(this.wf);
+      this.globalData.workflows[this.wfIndex].items[this.index].comments[commentIndex].content = commentContent.innerText;
+      this.globalData.workflows[this.wfIndex].items[this.index].comments[commentIndex].edited = true;
+      commentContent.innerText = this.globalData.workflows[this.wfIndex].items[this.index].comments[commentIndex].content; // to prevent weird duplication of last line
+      this.dataService.globalData$.next(this.globalData);
       this.snackbar.open('Comment updated');
       this.editMode = false;
     };

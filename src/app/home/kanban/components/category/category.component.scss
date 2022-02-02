@@ -1,0 +1,10 @@
+@media screen and (max-width: 400px) {
+    .mat-dialog-actions button {
+        width: 100%;
+        flex: 1;
+    }
+}
+
+.mat-dialog-content {
+    background-color: rgba(#fff, 0.9);
+}

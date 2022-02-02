@@ -1,8 +1,47 @@
 <div class="kanban">
-    <div class="parent-card-container" cdkDropList cdkDropListGroup cdkDropListOrientation="horizontal" (cdkDropListDropped)="wfDrop($event)" @listAnim>
+    <div class="container my-0">
+        <mat-form-field appearance="fill">
+            <mat-label>Categories</mat-label>
+            <mat-select [(ngModel)]="selectedColors" multiple>
+                <mat-option class="position-sticky top-0" (click)="selectAllCategory()" value="0" style="z-index: 2; background-color: #fff">ALL</mat-option>
+                <mat-divider></mat-divider>
+                <mat-option (click)="selectNotAll()" *ngFor="let category of categories" [value]="category.color" [style.borderLeftColor]="category.color" class="m-0 d-flex justify-content-center align-items-center" style="border-left: 10px solid transparent">
+                    <!-- <span class="d-inline-block me-3" style="width: 15px; height: 15px; border-radius: 3px; border: 1px solid #ccc" [style.backgroundColor]="c"></span> -->
+                    <span>{{ category.name }}</span>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-icon-button class="ms-1" matTooltip="Manage Categories" (click)="openCategory()">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-checkbox (click)="selectAllCategory(false)" [(ngModel)]="allSelected">All categories selected</mat-checkbox>
+    </div>
+
+    <!-- ALERT NOT ABLE TO DRAG WHEN SORT -->
+    <mat-card class="position-fixed bottom-0 end-0 m-4 mat-elevation-z7" style="max-width: 430px; z-index: 20" *ngIf="!allSelected">
+        <mat-card-content>
+            <span class="mat-body-2" style="color: red">Unable to drag items when filtered.</span>
+            <br />
+            <span>Please select all categories to allow dragging of items inside a list/group/workflow.</span>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <a color="primary" mat-button href="https://github.com/angular/components/issues/20633" target="_blank">
+                <mat-icon>launch</mat-icon>
+                <span> See Github Issue </span>
+            </a>
+            <button mat-button (click)="selectAllCategory()">SELECT ALL</button>
+        </mat-card-actions>
+    </mat-card>
+
+    <!-- Color Debug -->
+    <!-- {{ allSelected | json }} -->
+    <!-- {{ selectedColors | json }} -->
+    <div class="parent-card-container mt-0 pt-0" cdkDropList cdkDropListGroup cdkDropListOrientation="horizontal" (cdkDropListDropped)="wfDrop($event)" @listAnim>
         <!-- cdkDropListGroup is given since we don't have a "fixed" [cdkDropListConnectedTo] array value -->
         <!-- Workflow -->
-        <div class="wf-wrapper" *ngFor="let wf of workflows; let i = index" cdkDrag @slideIn>
+        <div class="wf-wrapper" *ngFor="let wf of globalData.workflows; let i = index" cdkDrag @slideIn>
             <mat-card class="wf-card mat-elevation-z3">
                 <mat-card-title>
                     <span class="wf-title-drag mat-title" cdkDragHandle>
@@ -25,7 +64,7 @@
                 </mat-card-title>
                 <!-- Items -->
                 <mat-card-content cdkDropList (cdkDropListDropped)="itemDrop($event, i)" [cdkDropListData]="wf.items">
-                    <mat-card class="item-card" *ngFor="let item of wf.items; let j = index" cdkDrag [style.borderLeftColor]="item.color">
+                    <mat-card class="item-card" *ngFor="let item of wf.items; let j = index" cdkDrag [cdkDragDisabled]="!allSelected" [style.borderLeftColor]="item.color" [style.display]="selectedColors.includes(item.color) ? '' : 'none'">
                         <mat-card-content>
                             <span style="max-width: 50%" [matTooltip]="item.description">{{ item.name }}</span>
                             <div class="spacer"></div>
@@ -45,9 +84,10 @@
                                     <mat-icon>edit</mat-icon>
                                     <span>Modify</span>
                                 </button>
+                                <mat-divider></mat-divider>
                                 <button mat-menu-item (click)="itemDelete(i, j)">
-                                    <mat-icon>delete</mat-icon>
-                                    <span>Delete</span>
+                                    <mat-icon color="warn">delete</mat-icon>
+                                    <span style="color: var(--color-warn)">Delete</span>
                                 </button>
                             </mat-menu>
                         </mat-card-content>

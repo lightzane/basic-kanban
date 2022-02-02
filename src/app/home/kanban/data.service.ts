@@ -1,19 +1,33 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Workflows } from './models/workflows';
+import { initialCategory } from '../../shared/constants/initial-category';
 import packageJson from './../../../../package.json';
+import { Category } from './models/category';
+import { GlobalData } from './models/global-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
+  private globalData: GlobalData = JSON.parse(localStorage.getItem('global-data')) || { workflows: [], categories: null };
+  globalData$ = new BehaviorSubject<GlobalData>(this.globalData);
+
+  /**
+   * @deprecated This is for backwards compatibility who uses this app before v1.5
+   */
   private savedWorkflows = JSON.parse(localStorage.getItem('data')) || [];
-  workflows$ = new BehaviorSubject<Workflows[]>(this.savedWorkflows);
+  // workflows$ = new BehaviorSubject<Workflows[]>(this.savedWorkflows);
 
   constructor() {
-    this.workflows$.subscribe((data) => {
-      this.savedWorkflows = data;
+    this.globalData$.subscribe((data) => {
+      if (this.savedWorkflows?.length) {
+        data.workflows = this.savedWorkflows;
+        localStorage.removeItem('data');
+      }
+
+      if (!data.categories) data.categories = initialCategory;
+      this.globalData = data;
     });
 
     this.identifyBrowserMaxStorage();
@@ -50,6 +64,10 @@ export class DataService {
    */
   getBrowserMaxStorage(): number {
     return +localStorage.getItem('_bts');
+  }
+
+  getCategories(): Category[] {
+    return [...this.globalData.categories];
   }
 
   getTotalSize(measurement: 'bytes' | 'kb' | 'mb' = 'bytes'): number {
@@ -90,8 +108,8 @@ export class DataService {
      */
   }
 
-  getWorkflowsAsString(): string {
-    return JSON.stringify(this.savedWorkflows);
+  getGlobalDataAsString(): string {
+    return JSON.stringify(this.globalData);
   }
 
   getVersion(): string {

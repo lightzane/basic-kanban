@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DataService } from '../../../data.service';
+import { Category } from '../../../models/category';
 import { WfItemDialogData } from '../../../models/wf-item-dialog-data';
 
 @Component({
@@ -19,9 +21,17 @@ export class WfItemFormComponent implements OnInit {
   description: string;
   displayColors: boolean = false;
   color: string = 'transparent';
-  colors = ['transparent', 'skyblue', '#2ecc71', 'pink', '#e74c3c', '#f1c40f', '#9b59b6', 'black', 'gray'];
+  categories: Category[] = [];
+  isAddItem = false;
+  selectedCategory: string;
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data: WfItemDialogData) { }
+  constructor(
+    private dataService: DataService,
+    @Inject(MAT_DIALOG_DATA) private data: WfItemDialogData
+  ) {
+    this.categories = this.dataService.getCategories();
+    this.selectedCategory = this.categories.find(v => v.color === data.input?.color)?.name;
+  }
 
   ngOnInit(): void {
 
@@ -62,6 +72,7 @@ export class WfItemFormComponent implements OnInit {
         this.description = '';
         this.btnText = 'Add Todo';
         this.btnColor = 'primary';
+        this.isAddItem = true;
         break;
       }
 
@@ -75,6 +86,7 @@ export class WfItemFormComponent implements OnInit {
         this.btnText = 'Update Todo';
         this.btnColor = 'accent';
         this.color = this.data.input.color;
+        this.isAddItem = false;
         break;
       }
     }
@@ -83,6 +95,8 @@ export class WfItemFormComponent implements OnInit {
 
   chooseColor(name: string): void {
     this.color = name;
+    this.isAddItem = false;
+    this.selectedCategory = this.categories.find(c => c.color === name).name;
   }
 
   isTodo(): boolean {

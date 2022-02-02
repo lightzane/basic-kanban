@@ -15,10 +15,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatSelectModule } from "@angular/material/select";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 import { CommentComponent } from './components/dialogs/comment/comment.component';
 import { CommentViewerComponent } from './components/dialogs/comment-viewer/comment-viewer.component';
 import { DateAgoPipe } from '../../shared/pipes/date-ago.pipe';
 import { ShortenBytes } from '../../shared/pipes/shorten-bytes.pipe';
+import { FormsModule } from '@angular/forms';
+import { CategoryComponent } from './components/category/category.component';
 
 const routes: Routes = [
   {
@@ -34,7 +38,8 @@ const routes: Routes = [
     CommentComponent,
     CommentViewerComponent,
     DateAgoPipe,
-    ShortenBytes
+    ShortenBytes,
+    CategoryComponent
   ],
   imports: [
     CommonModule,
@@ -50,7 +55,10 @@ const routes: Routes = [
     MatFormFieldModule,
     MatDividerModule,
     MatTooltipModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSelectModule,
+    FormsModule,
+    MatCheckboxModule
   ]
 })
 export class KanbanModule { }

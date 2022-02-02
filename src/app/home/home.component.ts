@@ -6,8 +6,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 // import { MatSidenav } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { initialCategory } from '../shared/constants/initial-category';
 import { FileImportConfirmDialogComponent } from './components/dialogs/file-import-confirm/file-import-confirm.component';
 import { DataService } from './kanban/data.service';
+import { GlobalData } from './kanban/models/global-data';
 
 @Component({
   selector: 'app-home',
@@ -41,8 +43,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // this.applyDarkDialog();
-    this.dataService.workflows$.subscribe((data) => {
-      if (data.length) this.hasData = true;
+    this.dataService.globalData$.subscribe((data) => {
+      if (data) this.hasData = true;
       else this.hasData = false;
     });
   }
@@ -62,19 +64,17 @@ export class HomeComponent implements OnInit {
   // }
 
   dataDelete(): void {
-    if (this.dataService.getWorkflowsAsString() !== '[]') {
-      const dialogRef = this.dialog.open(FileImportConfirmDialogComponent);
-      dialogRef.afterClosed().subscribe((isConfirmed) => {
-        if (isConfirmed) {
-          this.dataService.workflows$.next([]);
-          this.snackbar.open('All data cleared successfully');
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(FileImportConfirmDialogComponent);
+    dialogRef.afterClosed().subscribe((isConfirmed) => {
+      if (isConfirmed) {
+        this.dataService.globalData$.next({ categories: initialCategory, workflows: [] });
+        this.snackbar.open('All data cleared successfully');
+      }
+    });
   }
 
   dataExport(): void {
-    const data = this.dataService.getWorkflowsAsString();
+    const data = this.dataService.getGlobalDataAsString();
     this.downloadData('basic-kanban.txt', data);
   }
 
@@ -96,14 +96,29 @@ export class HomeComponent implements OnInit {
         return;
       }
 
-      this.dataService.workflows$.next(JSON.parse(fileContent));
+      const parsedContent = JSON.parse(fileContent);
+      let gd: GlobalData;
+
+      if (!parsedContent.workflows && !parsedContent.categories) {
+        // it must be coming from an old data
+        gd = {
+          workflows: parsedContent,
+          categories: initialCategory
+        };
+      } else {
+        gd = parsedContent;
+      }
+
+      if (!gd) return;
+
+      this.dataService.globalData$.next(gd);
       fileInput.value = ''; // to be able to re-read the same uploaded file name
     });
 
   }
 
   openDialog(fileInput: HTMLInputElement): void {
-    if (this.dataService.getWorkflowsAsString() === '[]') {
+    if (this.dataService.getGlobalDataAsString() === '[]') {
       fileInput.click();
     } else {
       const dialogRef = this.dialog.open(FileImportConfirmDialogComponent);

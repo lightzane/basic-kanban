@@ -1,7 +1,13 @@
 <form onsubmit="return false">
-    <h2 mat-dialog-title>{{ item.name }}</h2>
-    <mat-dialog-content cdkDrag cdkDragRootElement=".cdk-overlay-pane">
-        <p>{{ item.description }}</p>
+    <div class="d-md-flex">
+        <h2 mat-dialog-title class="mb-1">{{ item.name }}</h2>
+        <div class="spacer d-none d-md-block"></div>
+        <span class="mat-caption mat-elevation-z1 rounded p-2 pt-2" style="border-left: 4px solid transparent; background-color: rgba(255, 255, 255, 0.95)" [style.borderLeftColor]="category.color">
+            {{ category.name }}
+        </span>
+    </div>
+    <mat-dialog-content>
+        <p class="mt-2">{{ item.description }}</p>
         <mat-form-field appearance="fill" [style.width.%]="100">
             <mat-label>Add Comment</mat-label>
             <textarea matInput #txt rows="10" placeholder="Enter your comment here"></textarea>

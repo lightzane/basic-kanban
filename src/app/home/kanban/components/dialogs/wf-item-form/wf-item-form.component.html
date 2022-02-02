@@ -16,16 +16,19 @@
         <!-- Colors -->
         <div class="container-fluid" *ngIf="displayColors">
             <mat-card style="margin-bottom: 20px; border-left: 4px solid transparent" [style.borderLeftColor]="color">
-                <mat-card-content>Choose color below</mat-card-content>
+                <mat-card-content>
+                    <span *ngIf="isAddItem">Choose color below</span>
+                    <span>{{ selectedCategory }}</span>
+                </mat-card-content>
             </mat-card>
             <div class="color-picker">
-                <div class="color-tile-wrapper" *ngFor="let c of colors" (click)="chooseColor(c)">
-                    <div class="color-tile" [style.backgroundColor]="c" [class.current]="color === c"></div>
+                <div class="color-tile-wrapper" *ngFor="let category of categories" (click)="chooseColor(category.color)">
+                    <div class="color-tile" [style.backgroundColor]="category.color" [class.current]="color === category.color" [matTooltip]="category.name"></div>
                 </div>
             </div>
         </div>
     </mat-dialog-content>
-    <mat-dialog-actions align="end">
+    <mat-dialog-actions align="end" style="background-color: rgba(255, 255, 255, 0.8)">
         <button mat-button mat-dialog-close>Cancel</button>
         <button type="submit" mat-raised-button [color]="btnColor" [mat-dialog-close]="{ name: txt.value, description: desc.value, color: this.color }">{{ btnText }}</button>
     </mat-dialog-actions>
