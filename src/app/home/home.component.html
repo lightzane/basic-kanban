@@ -43,11 +43,11 @@
                     <mat-icon>file_download</mat-icon>
                     <span>Export Data</span>
                 </button>
+                <mat-divider></mat-divider>
                 <button mat-menu-item (click)="openDialog(fileInput)">
                     <mat-icon>file_upload</mat-icon>
                     <span>Import Data</span>
                 </button>
-                <mat-divider></mat-divider>
                 <button mat-menu-item (click)="dataDelete()" *ngIf="hasData">
                     <mat-icon color="warn">delete</mat-icon>
                     <span style="color: red">Clear All Data</span>
@@ -60,4 +60,4 @@
 </mat-sidenav-container>
 
 <!-- Input -->
-<input #fileInput hidden type="file" accept=".txt, text/plain" (change)="onFileSelect($event)" />
+<input #fileInput hidden type="file" accept=".txt, text/plain" (change)="onFileSelect($event, fileInput)" />

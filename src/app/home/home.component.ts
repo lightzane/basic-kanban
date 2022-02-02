@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
     this.downloadData('basic-kanban.txt', data);
   }
 
-  onFileSelect(event: Event): void {
+  onFileSelect(event: Event, fileInput: HTMLInputElement): void {
 
     const { target } = event;
     const { files } = target as HTMLInputElement;
@@ -97,6 +97,7 @@ export class HomeComponent implements OnInit {
       }
 
       this.dataService.workflows$.next(JSON.parse(fileContent));
+      fileInput.value = ''; // to be able to re-read the same uploaded file name
     });
 
   }
